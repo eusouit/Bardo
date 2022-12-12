@@ -1,0 +1,17 @@
+ 
+
+
+Fonte: MS/SVS/CGIAE - Sistema de Informações sobre Mortalidade - SIM
+
+
+Considera os códigos CIDs 10: X85-Y09 (agressão) e Y35 (intervenção legal)
+
+
+Óbitos por residência.
+
+
+Observação: Considera os óbitos da faixa etária de 15 a 29 anos.
+
+
+Elaboração Diest/Ipea.
+

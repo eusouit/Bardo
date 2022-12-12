@@ -1,0 +1,47 @@
+div.card {
+    border-radius: 0.50rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 20%) !important;
+}
+
+.card-header.panel-heading {
+    color: #222d32 !important;
+    /* color: rgb(255, 255, 255); */
+    border-start-start-radius: inherit;
+    border-start-end-radius: inherit
+}
+
+.fb-inline-field-container.form-line {
+    border-bottom: none;
+
+}
+
+.tfieldlist {
+    margin-top: 2rem;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 35%) !important;
+}
+
+.emprestimo {
+    border-radius: 0.25rem !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+}
+span.select2.select2-container.select2-container--default.select2-container--above.select2-container--focus {
+    border-radius: 0.25rem !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+}
+
+/* EMPRESTIMO LIST */
+span.select2-selection.select2-selection--single {
+    border-radius: 0.5rem !important;
+}
+input#input-form{
+    border-radius: 0.5rem !important;
+}
+select#input-form {
+    border-radius: 0.5rem !important;
+}
