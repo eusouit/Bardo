@@ -744,6 +744,197 @@ ALTER TABLE `system_user_unit`
   ADD CONSTRAINT `system_user_unit_ibfk_2` FOREIGN KEY (`system_unit_id`) REFERENCES `system_unit` (`id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `material`
+--
+
+CREATE TABLE `materials` (
+  `id` int(5) UNSIGNED NOT NULL PRIMARY KEY,
+  `description` varchar(200) CHARACTER SET utf8 DEFAULT NULL,
+  `value` int(11) DEFAULT NULL,
+  `user_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `material_order` voltada ao pedido dos materiais
+--
+
+CREATE TABLE `materials_orders` (
+  `id` int(11) NOT NULL PRIMARY KEY,
+  `user_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `status` varchar(19) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pivot_material_order`
+--
+
+CREATE TABLE `pivot_materials_orders` (
+  `materials_orders_id` int(11) DEFAULT NULL,
+  `materials_id` int(11) DEFAULT NULL,
+  `values` int(11) DEFAULT NULL,
+  `borrouweds_values` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `ferramentas`
+--
+
+CREATE TABLE `tools` (
+  `id` int(11) NOT NULL PRIMARY KEY,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `lending` ou emprestimo de ferramenta
+--
+
+CREATE TABLE `lendings_tools` (
+  `id` int(11) NOT NULL PRIMARY KEY,
+  `user_id` int(11) NOT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `status` varchar(50) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `deleted_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pivot_lendings_tools` 
+--
+
+CREATE TABLE `pivot_lendings_tools` (
+  `lendings_id` int(11) NOT NULL,
+  `tools_id` int(11) NOT NULL,
+  `value` int(11) NOT NULL,
+  `borrowed_value` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `materials`
+--
+ALTER TABLE `materials` 
+ADD key `fk_user_id` (`user_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `materials`
+--
+ALTER TABLE `materials_orders` 
+ADD key `fk_user_id` (`user_id` ASC) VISIBLE,
+ADD key `fk_admin_id` (`admin_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `pivot_materials_orders`
+--
+ALTER TABLE `pivot_materials_orders` 
+ADD key `fk_materials_order_id` (`materials_orders_id` ASC) VISIBLE,
+ADD key `fk_materials_id` (`materials_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `tools`
+--
+ALTER TABLE `tools` 
+ADD key `fk_user_id_tools` (`user_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `lendings_tools`
+--
+ALTER TABLE `lendings_tools` 
+ADD key `fk_user_id_lendings_tools` (`user_id` ASC) VISIBLE,
+ADD key `fk_admin_id_lendings_tools` (`admin_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Índices para tabela `pivot_lendigns_tools`
+--
+ALTER TABLE `pivot_lendings_tools` 
+ADD key `fk_lendings_id` (`lendings_id` ASC) VISIBLE,
+ADD key `fk_tools_id` (`tools_id` ASC) VISIBLE;
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `materials` 
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `system_user` (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `materials_orders` 
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `system_user` (`id`),
+  ADD CONSTRAINT `admin_id` FOREIGN KEY (`admin_id`) REFERENCES `system_user` (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `pivot_materials_orders` 
+  ADD CONSTRAINT `fk_pivot_materials_orders_id` FOREIGN KEY (`materials_orders_id`) REFERENCES `materials_orders` (`id`),
+  ADD CONSTRAINT `fk_pivot_materials_id` FOREIGN KEY (`materials_id`) REFERENCES `materials` (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `tools` 
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `system_user` (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `lendings_tools` 
+  ADD CONSTRAINT `fk_user_id_lendings` FOREIGN KEY (`user_id`) REFERENCES `system_user` (`id`),
+  ADD CONSTRAINT `fk_admin_id_lendings` FOREIGN KEY (`admin_id`) REFERENCES `system_user` (`id`);
+
+-- --------------------------------------------------------
+
+--
+-- Foreign keys para tabela `materials`
+--
+ALTER TABLE `pivot_lendings_tools` 
+  ADD CONSTRAINT `lendings_id` FOREIGN KEY (`lendings_id`) REFERENCES `lendings_tools` (`id`),
+  ADD CONSTRAINT `tools_id` FOREIGN KEY (`tools_id`) REFERENCES `tools` (`id`);
